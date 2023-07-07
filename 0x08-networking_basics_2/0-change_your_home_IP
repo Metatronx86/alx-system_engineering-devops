@@ -1,0 +1,10 @@
+#!/bin/env bash
+
+# Remove existing entries for localhost and facebook.com
+sudo sed -i '/^127.0.0.1[[:space:]]localhost$/d' /etc/hosts
+sudo sed -i '/^8\.8\.8\.8[[:space:]]facebook\.com$/d' /etc/hosts
+
+# Add new entries for localhost and facebook.com
+echo "127.0.0.2 localhost" | sudo tee -a /etc/hosts
+echo "8.8.8.8 facebook.com" | sudo tee -a /etc/hosts
+
