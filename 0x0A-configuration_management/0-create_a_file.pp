@@ -1,3 +1,4 @@
+#!/usr/bin/pup
 file { '/tmp/school':
   ensure   => file,
   owner    => 'www-data',
