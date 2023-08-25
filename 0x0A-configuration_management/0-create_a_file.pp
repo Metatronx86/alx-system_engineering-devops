@@ -1,4 +1,6 @@
 #!/usr/bin/pup
+# createsa file in tmp/
+
 file { '/tmp/school':
   ensure   => file,
   owner    => 'www-data',
