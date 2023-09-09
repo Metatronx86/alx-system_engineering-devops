@@ -1,37 +1,36 @@
 #!/usr/bin/env bash
-# Configures a new ubuntu machine by installing
-# Nginx where it should be listening on port 80
-# Serve a page that would return a Hello World string
-#
-# colors
-blue='\e[1;34m'
-brown='\e[0;33m'
-green='\e[1;32m'
-reset='\033[0m'
+# A script to install nginx on a server
+# - Nginx should be listening on port 80
+# - When querying Nginx at its root / with a GET request (requesting a page) using curl,
+#     it must return a page that contains the string `Hello World!`
 
-echo -e "${blue}Updating and installing ${brown}Nginx${blue}.${reset}\n"
-sudo apt-get update -y -qq && \
-	 sudo apt-get install nginx -y
+# Install nginx
+apt-get -y update
+apt-get -y install nginx
 
-echo -e "\n${blue}Setting up some minor stuff.${reset}\n"
+# Start nginx
+if [[ ! $(pgrep nginx) ]]; then
+    service nginx start
+fi
 
-# starting nginx service
-sudo service nginx start
+# Get the first root directory of nginx from the configuration file
+root_dir=$(grep "root" /etc/nginx/sites-available/default | cut -d " " -f 2 | tr -d ";" | head -1)
 
-# allowing nginx on firewall
-sudo ufw allow 'Nginx HTTP'
+# Create the directory if it doesn't exist
+if [[ ! -d $root_dir ]]; then
+    sudo mkdir -p "$root_dir"
+fi
 
-# Give the user ownership to website files for easy editing
-sudo chown -R "$USER":"$USER" /var/www/html
-sudo chmod -R 755 /var/www
+# Write `Hello World!` to the index.html file
+echo "Hello World!" > "$root_dir"/index.html
 
-# Backup default index
-cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
+# Check if Nginx is running and serving the expected content
+response=$(curl -s http://localhost)
+if [[ $response == "Hello World!" ]]; then
+  echo "Nginx installation and configuration successful!"
+else
+  echo "Nginx installation or configuration failed."
+  exit 1
+fi
 
-# Creating new index
-echo -e "Hello World!" | dd status=none of=/var/www/html/index.nginx-debian.html
-
-# Restarting nginx
-sudo service nginx restart
-
-echo -e "\n${green}Completed.${reset} ✅\n"
+exit 0
