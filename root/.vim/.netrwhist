@@ -1,0 +1,7 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =5
+let g:netrw_dirhist_5='/'
+let g:netrw_dirhist_4='/alx-system_engineering-devops'
+let g:netrw_dirhist_3='/alx-system_engineering-devops/0x07-networking_basics'
+let g:netrw_dirhist_2='/alx-system_engineering-devops/0x04-loops_conditions_and_parsing'
+let g:netrw_dirhist_1='/alx-higher_level_programming/0x07-python-test_driven_development/tests'
