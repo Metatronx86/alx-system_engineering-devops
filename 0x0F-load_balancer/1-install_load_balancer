@@ -1,58 +1,29 @@
-#!/bin/env  bash
-
-# Check if the script is being run as root
-if [ "$(id -u)" -ne 0 ]; then
-  echo "This script must be run as root or with sudo."
-  exit 1
-fi
-
-# Update the package list to ensure we install the latest packages
-apt update
-
-# Install HAProxy
-apt install -y haproxy
-
-# Backup the default HAProxy configuration file
-cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.backup
-
-# Create a new HAProxy configuration file
-cat > /etc/haproxy/haproxy.cfg <<EOL
-global
-    log /dev/log local0
-    log /dev/log local1 notice
-    chroot /var/lib/haproxy
-    stats socket /run/haproxy/admin.sock mode 660 level admin expose-fd listeners
-    stats timeout 30s
-    user haproxy
-    group haproxy
-    daemon
-
-defaults
-    log global
-    mode http
-    option httplog
-    option dontlognull
-    timeout connect 5000
-    timeout client 50000
-    timeout server 50000
-
-frontend http_front
+#!/usr/bin/env bash
+# Configure Nginx so that its HTTP response contains
+# a custom header
+#
+balancer="\
+frontend haproxy_balancer
     bind *:80
     mode http
-    default_backend http_back
-
-backend http_back
+    default_backend webservers
+    
+backend webservers
     balance roundrobin
-    server web-01 34.224.63.115:80 check
-    server web-02 54.162.42.29:80 check
-EOL
+    server 99203-web-01 34.224.63.115:80 check
+    server 99203-web-02 54.162.42.29:80 check
+"
+# Update packages
+apt-get -y update
+apt-get -y upgrade
 
-# Enable and start HAProxy
-systemctl enable haproxy
-systemctl start haproxy
+# Add HAProxy PPA
+apt-get -y install software-properties-common
+add-apt-repository -y ppa:vbernat/haproxy-2.5
+apt-get -y update
 
-# Check HAProxy status
-systemctl status haproxy
-
-echo "HAProxy has been installed and configured."
-
+# Install HAProxy
+apt-get -y install haproxy
+cp -a /etc/haproxy/haproxy.cfg{,.orig}
+echo "$balancer" >> /etc/haproxy/haproxy.cfg
+service haproxy restart
