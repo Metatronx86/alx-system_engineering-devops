@@ -1,25 +1,16 @@
 #!/usr/bin/env bash
-# Takes a subdomain and a domain and returns information about the subdomain
+# takes in a domain and subdomain as argument and print out the subdomain infos
 
-print_info () {
-    local subdomain="$1"
-    local domain="$2"
-    local ip_address="$(dig +short "$subdomain.$domain")"
-    
-    if [ -n "$ip_address" ]; then
-        echo "Your subdomain $subdomain points to IP: $ip_address"
-    else
-        echo "Failed to retrieve IP address for subdomain $subdomain"
-    fi
+output () {
+    dig "$1" | grep -A1 'ANSWER SECTION:' | sed -r "s/$1./$2/g" |  awk -F" " ' NR==2 { print "The subdomain " $1 " is a " $4 " record and points to "$5 }'
 }
 
 if [ "$#" -eq 2 ]
 then
-    print_info "$2" "$1"
+    output "$2.$1" "$2"
 else
-    print_info "www" "$1"
-    print_info "lb-01" "$1"
-    print_info "web-01" "$1"
-    print_info "web-02" "$1"
+    output "www.$1" 'www'
+    output "lb-01.$1" '54.234.75.216'
+    output "web-01.$1" '34.224.63.115'
+    output "web-02.$1" '54.162.42.29'
 fi
-
