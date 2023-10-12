@@ -1,23 +1,25 @@
-Web stack debugging #3
-When debugging, sometimes logs are not enough. Either because the software is breaking in a way that was not expected and the error is not being logged, or because logs are not providing enough information. In this case, you will need to go down the stack, the good news is that this is something Holberton students can do :)
+0x18. Webstack monitoring
+Background Context
+“You cannot fix or improve what you cannot measure” is a famous saying in the Tech industry. In the age of the data-ism, monitoring how our Software systems are doing is an important thing. In this project, we will implement one of many tools to measure what is going on our servers.
 
-Wordpress is a very popular tool, it allows you to run blogs, portfolios, e-commerce and company websites… It actually powers 26% of the web, so there is a fair chance that you will end up working with it at some point in your career.
+Web stack monitoring can be broken down into 2 categories:
 
-Wordpress is usually run on LAMP (Linux, Apache, MySQL, and PHP), which is a very widely used set of tools.
+Application monitoring: getting data about your running software and making sure it is behaving as expected
+Server monitoring: getting data about your virtual or physical server and making sure they are not overloaded (could be CPU, memory, disk or network overload)
 
-The web stack you are debugging today is a Wordpress website running on a LAMP stack.
 
-Requirements
+Resources
+Read or watch:
+
+What is server monitoring
+What is application monitoring
+System monitoring by Google
+Nginx logging and monitoring
+Learning Objectives
+At the end of this project, you are expected to be able to explain to anyone, without the help of Google:
+
 General
-All your files will be interpreted on Ubuntu 14.04 LTS
-All your files should end with a new line
-A README.md file at the root of the folder of the project is mandatory
-Your Puppet manifests must pass puppet-lint version 2.1.1 without any errors
-Your Puppet manifests must run without error
-Your Puppet manifests first line must be a comment explaining what the Puppet manifest is about
-Your Puppet manifests files must end with the extension .pp
-Files will be checked with Puppet v3.4
-More Info
-Install puppet-lint
-$ apt-get install -y ruby
-$ gem install puppet-lint -v 2.1.1
+Why is monitoring needed
+What are the 2 main area of monitoring
+What are access logs for a web server (such as Nginx)
+What are error logs for a web server (such as Nginx)
