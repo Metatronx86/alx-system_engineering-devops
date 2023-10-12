@@ -1,36 +1,23 @@
-0x14. MySQL
-DevOps
-SysAdmin
-MySQLResources
-Read or watch:
+Web stack debugging #3
+When debugging, sometimes logs are not enough. Either because the software is breaking in a way that was not expected and the error is not being logged, or because logs are not providing enough information. In this case, you will need to go down the stack, the good news is that this is something Holberton students can do :)
 
-What is a primary-replica cluster
-MySQL primary replica setup
-Build a robust database backup strategy
-man or help:
+Wordpress is a very popular tool, it allows you to run blogs, portfolios, e-commerce and company websites… It actually powers 26% of the web, so there is a fair chance that you will end up working with it at some point in your career.
 
-mysqldump
-Learning Objectives
-At the end of this project, you are expected to be able to explain to anyone, without the help of Google:
+Wordpress is usually run on LAMP (Linux, Apache, MySQL, and PHP), which is a very widely used set of tools.
 
-General
-What is the main role of a database
-What is a database replica
-What is the purpose of a database replica
-Why database backups need to be stored in different physical locations
-What operation should you regularly perform to make sure that your database backup strategy actually works
-Copyright - Plagiarism
-You are tasked to come up with solutions for the tasks below yourself to meet with the above learning objectives.
-You will not be able to meet the objectives of this or any following project by copying and pasting someone else’s work.
-You are not allowed to publish any content of this project.
-Any form of plagiarism is strictly forbidden and will result in removal from the program.
+The web stack you are debugging today is a Wordpress website running on a LAMP stack.
+
 Requirements
 General
-Allowed editors: vi, vim, emacs
-All your files will be interpreted on Ubuntu 16.04 LTS
+All your files will be interpreted on Ubuntu 14.04 LTS
 All your files should end with a new line
-A README.md file, at the root of the folder of the project, is mandatory
-All your Bash script files must be executable
-Your Bash script must pass Shellcheck (version 0.3.7-5~ubuntu16.04.1 via apt-get) without any error
-The first line of all your Bash scripts should be exactly #!/usr/bin/env bash
-The second line of all your Bash scripts should be a comment explaining what is the script doing
+A README.md file at the root of the folder of the project is mandatory
+Your Puppet manifests must pass puppet-lint version 2.1.1 without any errors
+Your Puppet manifests must run without error
+Your Puppet manifests first line must be a comment explaining what the Puppet manifest is about
+Your Puppet manifests files must end with the extension .pp
+Files will be checked with Puppet v3.4
+More Info
+Install puppet-lint
+$ apt-get install -y ruby
+$ gem install puppet-lint -v 2.1.1
